@@ -1,0 +1,127 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Chapter II: Desafio 02 - Documentando com Swagger",
+    "description": "Essa é uma documentação da API Introdução ao SOLID",
+    "version": "1.0.0",
+    "contact": {
+      "email": "tuf-code@outlook.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Criar usuário",
+        "description": "Criar um novo usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Ignite",
+                  "email": "name@email.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operação realizada com sucesso"
+          },
+          "400": {
+            "description": "Usuário já existe!"
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "Listar usuários",
+        "description": "Lista todos os usuários (Somente Administrador)",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "user_id",
+            "required": "true",
+            "description": "ID do Administrador",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso"
+          },
+          "400": {
+            "description": "Usuário não existe! ou Usuário existe mas não é um administrador!"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Listar usuário",
+        "description": "Lista um usuário específico",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": "true",
+            "description": "ID do usuário",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso"
+          },
+          "404": {
+            "description": "Usuário não existe!"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Atualizar usuário",
+        "description": "Transforma um usuário em Administrador",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": "true",
+            "description": "ID do usuário",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso"
+          },
+          "404": {
+            "description": "Usuário não existe!"
+          }
+        }
+      }
+    }
+  }
+}
